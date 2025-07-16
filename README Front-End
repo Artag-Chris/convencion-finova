@@ -60,6 +60,66 @@ En Finova, el equipo de desarrollo frontend sigue un conjunto de **estándares y
 - El código será organizado en carpetas claras y modulares, separando componentes, hooks, servicios, utilidades y estilos.  
 - Se promoverán buenas prácticas de separación de responsabilidades, facilitando la escalabilidad.  
 
+## Nomenclatura y Estilo de Código
+
+- La **nomenclatura en frontend seguirá los mismos estándares que en backend** para asegurar coherencia entre ambos equipos:  
+  - **camelCase** para variables, propiedades y funciones.  
+  - **PascalCase** para nombres de clases y componentes React.  
+
+- Esto facilita la lectura y comprensión cuando se trabaja fullstack y mantiene la uniformidad en el ecosistema Finova.
+
+---
+
+## Documentación y Módulos Aprobados
+
+- Todo **módulo o funcionalidad específica desarrollada deberá contar con documentación completa y vigente una vez aprobada y que haya pasado las pruebas correspondientes**.  
+- La documentación debe incluir:  
+  - Descripción funcional clara del módulo.  
+  - Listado detallado de las interfaces e **interfaces TypeScript** involucradas, documentando tipos de datos y estructuras.  
+  - **Ejemplos concretos de las peticiones HTTP que realiza el frontend a las APIs del backend**, incluyendo:  
+    - Método HTTP  
+    - Endpoint  
+    - Parámetros o cuerpo de la solicitud  
+    - Respuesta esperada (incluyendo estructura JSON)  
+  - Consideraciones especiales en el consumo de datos o manejo de estados relacionados.
+
+---
+
+## Ejemplo de Petición del Frontend a Backend
+
+// Ejemplo usando Axios con patrón adaptador en frontend
+
+import axios from 'axios';
+
+interface User {
+id: string;
+name: string;
+email: string;
+}
+
+// Función que obtiene usuarios desde backend
+async function fetchUsers(): Promise<User[]> {
+const response = await axios.get<User[]>('/api/users');
+return response.data;
+}
+
+text
+
+---
+
+## Diagramas de Flujo
+
+- Se **recomienda ampliamente el uso de diagramas de flujo tanto para frontend como para backend** para documentar y visualizar los procesos, flujos de datos y la interacción entre sistemas.  
+- Los diagramas de flujo ayudan a:  
+  - Entender claramente la lógica del sistema.  
+  - Mostrar cómo se comunican frontend y backend mediante APIs.  
+  - Facilitar la colaboración entre equipos y disminuir malentendidos.  
+- Se pueden utilizar herramientas como **Diagram.net, Microsoft Visio, or ProcessOn** para crear diagramas claros y reutilizables.  
+- Es buena práctica que cada módulo clave tenga un diagrama que refleje su comportamiento y flujo de datos.
+
+---
+
+
 ---
 
 ## Resumen
@@ -73,7 +133,12 @@ En Finova, el equipo de desarrollo frontend sigue un conjunto de **estándares y
 | **UI/UX**                   | Animaciones con Framer Motion y GSAP; 3D con three.js; diseño atómico y componentes reutilizables; uso de shadcn UI |
 | **Estado Global**            | Uso de Zustand para manejo de estado seguro y sencillo                  |
 | **Organización del Código**  | Modular, con separación clara de responsabilidades                      |
+| **Nomenclatura**       | camelCase para variables y funciones; PascalCase para clases y componentes |
+| **Documentación Módulos** | Documentación completa con ejemplos de peticiones HTTP a backend |
+| **Comunicación APIs**  | Uso estándar de JSON en peticiones y respuestas                   |
+| **Diagramas de flujo** | Uso obligatorio para módulos clave en frontend y backend          |
 
 ---
 
 Con estos lineamientos, Finova busca desarrollar interfaces frontend robustas, eficientes y agradables, que mantengan una experiencia de usuario consistente y faciliten el trabajo colaborativo y la escalabilidad del software.
+
