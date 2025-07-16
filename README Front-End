@@ -142,3 +142,75 @@ text
 
 Con estos lineamientos, Finova busca desarrollar interfaces frontend robustas, eficientes y agradables, que mantengan una experiencia de usuario consistente y faciliten el trabajo colaborativo y la escalabilidad del software.
 
+# Anexo: Uso de JSON Web Tokens (JWT) en las Peticiones
+
+En Finova, para garantizar la seguridad y autenticación en la comunicación entre frontend y backend, se aplicará el uso de **JSON Web Tokens (JWT)** como mecanismo estándar para proteger las APIs.
+
+---
+
+## Proceso General de Uso de JWT
+
+1. **Generación del token:**  
+   - Cuando un usuario inicia sesión, el backend valida sus credenciales y, si son correctas, genera un token JWT firmado con una clave secreta.  
+   - Este token contiene información necesaria para identificar al usuario (payload) sin exponer datos sensibles.
+
+2. **Entrega y almacenamiento seguro:**  
+   - El backend envía el JWT al cliente como respuesta a la solicitud de login.  
+   - El frontend debe almacenar este token de forma segura, preferentemente en **memoria o en cookies con flag HttpOnly y Secure**, para minimizar riesgos XSS.  
+   - Evitar guardar JWT en localStorage si es posible, para mejorar la seguridad.
+
+3. **Envío del token en solicitudes protegidas:**  
+   - Para acceder a rutas o servicios protegidos, el frontend incluye el JWT en el header `Authorization` de cada petición usando el esquema `Bearer`.  
+   - Ejemplo:  
+     ```
+     Authorization: Bearer <token_jwt>
+     ```
+
+4. **Validación en el backend:**  
+   - El backend valida el JWT en cada petición protegida, verificando firma, expiración y permisos.  
+   - Si el token es válido, permite el acceso y procesa la solicitud; si no, devuelve un error de autorización.
+
+5. **Renovación de tokens:**  
+   - El JWT suele tener una vida corta (ej. minutos). Para sesiones prolongadas, se utiliza un **refresh token** con vida más larga para obtener nuevos tokens de acceso sin pedir credenciales nuevamente.  
+   - El frontend debe implementar la lógica para detectar expiración y solicitar renovación segura al backend.
+
+---
+
+## Ejemplo de Implementación en Frontend con Axios
+
+import axios from 'axios';
+
+// Función para configurar Axios con token JWT
+function setupAxios(token: string) {
+axios.defaults.headers.common['Authorization'] = Bearer ${token};
+}
+
+// Ejemplo de petición GET con token incluido
+async function fetchUserProfile() {
+const response = await axios.get('/api/user/profile');
+return response.data;
+}
+
+text
+
+---
+
+## Buenas Prácticas sobre JWT en Finova
+
+- Siempre usar **HTTPS** para evitar la interceptación del token.  
+- No almacenar tokens en lugares accesibles por scripts no confiables (evitar localStorage si es posible).  
+- Implementar mecanismos para la **revocación de tokens** y control de sesión en backend.  
+- Definir correctamente los tiempos de expiración del token de acceso y refresh tokens para balancear seguridad y usabilidad.  
+- Registrar y monitorear intentos fallidos de validación para detectar posibles ataques.
+
+---
+
+Esta integración de JWT asegura que nuestras APIs y aplicaciones gestionen usuarios y permisos de manera segura, alineada con las mejores prácticas y estándares modernos.
+
+---
+
+Referencias:
+
+- [Implementar JWT simple con Express](https://4geeks.com/es/lesson/comprendiendo-jwt-y-como-implementar-un-jwt-simple-con-express)  
+- [Cómo almacenar correctamente JWT en frontend](https://secture.com/como-almacenar-correctamente-tokens-jwt-en-el-front/)  
+- [Qué es JWT y cómo funciona](https://openwebinars.net/blog/que-es-json-web-token-y-como-funciona/)
