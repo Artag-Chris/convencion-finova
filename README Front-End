@@ -1,1 +1,79 @@
+# Convenciones y Normas para el Frontend en Finova
 
+En Finova, el equipo de desarrollo frontend sigue un conjunto de **estándares y buenas prácticas** que aseguran calidad, consistencia y mantenibilidad en nuestras aplicaciones. A continuación, se detallan los lineamientos clave para el desarrollo frontend.
+
+---
+
+## Uso de TypeScript y Tipado
+
+- Todos los desarrolladores deben trabajar sobre bases en **TypeScript**, aprovechando su tipado estático para minimizar errores en tiempo de desarrollo.  
+- Es obligatorio que las **interfaces estén bien definidas y documentadas** para cada dato y componente.  
+- Se debe **evitar el uso del tipo `any`** tanto como sea posible para preservar la seguridad de tipos.  
+- Únicamente se permitirá `any` en casos muy específicos derivados de restricciones de tiempo o variables particulares, y siempre con justificación clara y controlada.  
+- Es recomendado usar herramientas de validación y librerías como [Zod](https://github.com/colinhacks/zod) para reforzar la validación de datos.
+
+---
+
+## Arquitectura y Uso de Clases y Funciones
+
+- En frontend utilizamos una combinación de **clases y funciones**, según las necesidades:  
+  - **Clases:** Para modelar entidades y servicios complejos, manteniendo consistencia con backend y reforzando la estructura orientada a objetos donde aplique.  
+  - **Funciones:** Especialmente para componentes funcionales de React y hooks, aprovechando la interactividad y reactividad propias del framework.  
+
+- React es el framework estándar para la mayoría de proyectos, usando:  
+  - **Vite** como entorno de desarrollo predeterminado por su rapidez y simplicidad.  
+  - **Next.js** en casos específicos que requieran renderizado del lado servidor (SSR) o por requerimientos especiales del proyecto, decisión tomada por el arquitecto.  
+
+---
+
+## Comunicación con Backend y APIs
+
+- Toda comunicación con el backend **se hará en formato JSON**, que es el estándar para interoperabilidad, legibilidad y compatibilidad.  
+- Solo en casos especiales, por ejemplo, integraciones con APIs legacy o servicios externos, se permitirá el consumo de otros formatos como XML o SOAP.  
+  - Ejemplo: integración con sistemas bancarios que usan SOAP/XML.  
+- El consumo de APIs se hará preferentemente con **Axios**, utilizando el **Patrón Adaptador** para desacoplar la implementación y facilitar el cambio o actualización de librerías.  
+
+---
+
+## Estilo Visual y Librerías para UI/UX
+
+- Para animaciones y consistencia visual entre productos, se usarán librerías estándar como:  
+  - **Framer Motion**  
+  - **GSAP**  
+
+- Para componentes 3D o experiencias avanzadas, se integrarán librerías como **three.js**.  
+
+- El estilo visual será definido de acuerdo a las necesidades del proyecto, pero se fomentará la adopción del **diseño atómico** y la **reutilización extensiva de componentes** para garantizar mantenibilidad y coherencia.  
+
+- Se dará prioridad al uso de librerías como **shadcn UI** para acelerar el desarrollo y mantener una interfaz moderna y accesible.
+
+---
+
+## Gestión de Estado
+
+- El manejo del estado global o compartido se realizará preferentemente con la librería **Zustand**, que ofrece un enfoque eficiente y sencillo para evitar exponer datos sensibles en el almacenamiento local (localStorage).  
+
+---
+
+## Estructura y Organización del Proyecto
+
+- El código será organizado en carpetas claras y modulares, separando componentes, hooks, servicios, utilidades y estilos.  
+- Se promoverán buenas prácticas de separación de responsabilidades, facilitando la escalabilidad.  
+
+---
+
+## Resumen
+
+| Área                         | Convención / Práctica clave                                             |
+|------------------------------|------------------------------------------------------------------------|
+| **Lenguaje**                 | Uso obligatorio de TypeScript con interfaces bien definidas            |
+| **Tipado**                   | Evitar `any`, usar tipos explícitos y librerías de validación          |
+| **Arquitectura React**       | Combinación de clases y funciones; Vite preferido, Next.js cuando aplique|
+| **APIs y Comunicación**      | Formato JSON por defecto, uso de Axios con patrón adaptador             |
+| **UI/UX**                   | Animaciones con Framer Motion y GSAP; 3D con three.js; diseño atómico y componentes reutilizables; uso de shadcn UI |
+| **Estado Global**            | Uso de Zustand para manejo de estado seguro y sencillo                  |
+| **Organización del Código**  | Modular, con separación clara de responsabilidades                      |
+
+---
+
+Con estos lineamientos, Finova busca desarrollar interfaces frontend robustas, eficientes y agradables, que mantengan una experiencia de usuario consistente y faciliten el trabajo colaborativo y la escalabilidad del software.
