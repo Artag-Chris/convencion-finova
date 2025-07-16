@@ -109,6 +109,64 @@ Esto optimiza la velocidad de desarrollo y asegura consistencia entre proyectos.
 
 ---
 
+
+
+## Idioma en Nombres y Variables
+
+- En Finova usamos **inglés como idioma estándar para nombrar variables, funciones, clases, archivos y directorios**.  
+- Esto facilita la colaboración con equipos internacionales, el uso de librerías externas y busca estandarizar los términos técnicos.  
+- Excepcionalmente se puede usar español para variables muy específicas de negocio internas o cuando la nomenclatura en español sea mucho más clara, pero siempre con justificación clara y mínima cantidad.
+
+_**Ejemplos:**_  
+Correcto: `userName`, `paymentService`, `orderRepository`  
+Evitar: `nombreUsuario`, `servicioDePago`
+
+---
+
+## Arquitectura y Estructura de Código
+
+### Separación de Funciones
+
+- Se recomienda **separar la lógica en dos niveles**:  
+  - **Funciones generales o utilitarias**: funciones reutilizables sin dependencia directa de módulos específicos, ubicadas en carpetas tipo `/utils` o `/helpers`.  
+    _Ejemplo:_ formateo de fechas, validaciones comunes, manejo de errores genéricos.  
+  - **Funciones específicas de módulo**: funciones propias a un módulo concreto, que pertenecen a servicios o controladores y están organizadas dentro del propio módulo.  
+
+### Nombres y Organización de Directorios
+
+- Los directorios deben reflejar claramente su contenido y propósito, e ir en **inglés, singular o plural de forma coherente**. Por ejemplo:  
+  - `/routes` – Para definiciones de endpoints.  
+  - `/controllers` – Controladores que reciben la petición y la encaminan.  
+  - `/services` – Lógica de negocio y comunicación con bases de datos o APIs externas.  
+  - `/middlewares` – Funciones middleware de Express u otro framework.  
+  - `/models` – Definición de entidades y esquemas de base de datos.  
+  - `/utils` o `/helpers` – Funciones auxiliares reutilizables.  
+
+- Cuando se necesite un nuevo directorio o módulo, debe:  
+  - Tener una responsabilidad clara y definida.  
+  - Ser documentado y versionado igual que el resto del proyecto.  
+  - Evitar albergar funciones sin cohesión o genéricas, que deberían ir a `/utils`.
+
+### Ejemplo de Estructura
+/src
+/controllers
+/middlewares
+/models
+/routes
+/services
+/utils
+/config
+/tests
+
+## Manejo de Variables de Entorno
+
+- Se usará un archivo dedicado para la inicialización y validación de variables de entorno, por ejemplo `config/index.js` o `config/env.js`.  
+- Todas las variables de entorno necesarias serán marcadas como **requeridas**, es decir, si alguna de ellas no está presente o válida en el entorno de ejecución, **la aplicación no debe arrancar** y debe lanzar un error claro para evitar comportamientos inesperados.  
+- Esto permite detectar configuraciones erróneas en etapas tempranas y facilita el despliegue en diferentes ambientes (desarrollo, pruebas, producción).
+
+- Se recomienda usar librerías como [dotenv](https://www.npmjs.com/package/dotenv) para cargar variables en desarrollo, y mecanismos seguros para producción (vaults, servicios de secrets, etc.).
+
+---
 ## Resumen
 
 | Área                   | Convención / Práctica clave                                             |
@@ -122,6 +180,10 @@ Esto optimiza la velocidad de desarrollo y asegura consistencia entre proyectos.
 | **Métricas**           | API exclusiva y segura, base de datos propia, consumo desde dashboards  |
 | **Seguridad**          | JWT, validaciones estrictas, auditoría y manejo seguro de credenciales |
 | **Entorno de pruebas** | Ambiente aislado, datos anonimizados y replicación de producción       |
+| **Idioma**                   | Uso de inglés para variables, funciones, clases y directorios (salvo excepciones justificadas) |
+| **Separación Funciones**     | Funciones generales en `/utils`, funciones específicas en su módulo         |
+| **Directorios**              | Nombres en inglés, estructura clara y modular                              |
+| **Variables de entorno**      | Archivo dedicado que valida variables requeridas; si faltan, la app no arranca |
 
 ---
 
